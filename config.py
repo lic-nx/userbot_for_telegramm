@@ -1,10 +1,14 @@
 __all__ = ['Config']
 
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-class Config:
-#    API_ID=os.getenv('api_id')
-#    API_HASH=os.getenv('api_hash')
-    API_ID = 23168749  
-    API_HASH = "da8d6a6b81e2e7af6553c1fdccc0abde"
+API_ID = os.getenv('API_ID')
+API_HASH = os.getenv('API_HASH')
+
+
+print(API_ID)
+print(API_HASH)

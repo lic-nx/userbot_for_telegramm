@@ -1,11 +1,15 @@
 from pyrogram import Client, filters
 import asyncio
 from datetime import date
-from config import Config
 from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 from time import sleep
-app = Client("my_account", api_id=Config.API_ID, api_hash=Config.API_HASH)
+from dotenv import dotenv_values
+Config = dotenv_values()
+print(Config["API_ID"])
+print(Config["API_HASH"])
+
+app = Client("my_account", api_id=Config["API_ID"], api_hash=Config["API_HASH"])
 happy_birthday_days = {}
 
 # функция
@@ -34,6 +38,14 @@ async def command_handler(client: Client, message: Message):
     elif message.text == '/start':
         await message.reply(
             "Приветики конфетики я личный бот Настюшки-кросотушки. я пока ничего не умею но скоро научусь. love")
+
+@app.on_message(filters.command("add"))
+async def command_handler(client: Client, message: Message):
+    # Извлекаем текст сообщения после команды
+    args = message.text.split(' ') if len(message.text.split(' ')) > 2 else ""
+    add_dictionary(args[2], args[1])
+    # Отправляем ответ с аргументами
+    await message.reply(args)
 
 
 @app.on_message(filters.command('huck', prefixes="."))
