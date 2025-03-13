@@ -47,6 +47,28 @@ async def command_handler(client: Client, message: Message):
     # Отправляем ответ с аргументами
     await message.reply(args)
 
+@app.on_message(filters.command("return"))
+def return_users(client: Client, message: Message):
+    app.send_message(message.chat.id, happy_birthday_days)
+
+
+@app.message_handler(filters.command("add_"))
+def some(message):
+    if message.chat.type == 'private':
+        if message.text == 'Поиск техники':
+            name = app.send_message(message.chat.id, 'Введите телеграм никнейм?')
+            date = app.send_message(message.chat.id, 'Введите день и месяц рождения в формате mm:dd')
+            add_dictionary(date, name) 
+            # app.register_next_step_handler(msg, some_1)
+
+
+# def some_1(message):
+#     print(f'на предыдущем шаге введено {message.text}')
+
+#     app.send_message(message.chat.id, Search(message.text, limit=1).result()['result'][0]['link'])
+
+
+
 
 @app.on_message(filters.command('huck', prefixes="."))
 async def huck(client: Client, message: Message):
